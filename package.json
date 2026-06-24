@@ -1,0 +1,24 @@
+{
+  "name": "task-flow-api",
+  "version": "1.0.0",
+  "description": "A role-based task management backend application built with Node.js, Express.js, TypeScript, and MongoDB.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RohitSingh-0/Task-Flow-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/RohitSingh-0/Task-Flow-api/issues"
+  },
+  "homepage": "https://github.com/RohitSingh-0/Task-Flow-api#readme"
+}
