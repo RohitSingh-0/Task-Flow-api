@@ -196,25 +196,33 @@ TypeScript simply follows the configuration provided by the developer
 * Install packages based on whether they are needed during development or runtime
 * Ask "Why?" before asking "Which command?"
 
-# Today's Milestone
+# .env & .gitignore
+Environment variables are not only used for secrets like JWT_SECRET or database passwords
 
-Completed:
+They are also used for application configuration, such as PORT, so that the same code can run in different environments without modification.
 
-* GitHub repository created
-* Initial project planning completed
-* README created
-* Node project initialized.
-* Understood the purpose of `package.json`.
-* Understood the purpose of `tsconfig.json`.
-* Learned the difference between dependencies and devDependencies
+## Session - Express Server Setup
 
-No backend code was written today
-The focus was entirely on understanding the project setup.
+### What I Built
 
-# Next Session Goal
+- Configured TypeScript project.
+- Created app.ts and server.ts.
+- Understood the responsibility of both files.
+- Learned how environment variables work.
+- Successfully started the Express server.
 
-* Install TypeScript packages
-* Generate `tsconfig.json`
-* Understand every important TypeScript configuration
-* Create the initial `src` structure
-* Prepare the project for the Express server
+### What I Learned
+
+- app.ts should only configure the Express application.
+- server.ts is responsible for starting the server.
+- process.env reads environment variables.
+- .env stores configuration, not just secrets.
+- npm run dev runs two processes:
+  1. TypeScript compiler in watch mode.
+  2. Nodemon to restart the compiled server automatically.
+
+### Mistakes
+
+- I initially hardcoded the port.
+- I misunderstood why PORT belongs in .env.
+- I learned the difference between configuration and hardcoding.
