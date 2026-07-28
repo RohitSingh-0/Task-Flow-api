@@ -41,4 +41,4 @@ Database
 
 ## Project Status
 
-Planning Phase 🚧
+Developing Phase 🚧

@@ -1,9 +1,12 @@
 import express from "express";
+import userRouter from "./routes/user.route.js";
+
 const app = express();
+
+// Middleware
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("app.ts running.....")
-});
+// Routes
+app.use("/users", userRouter);
 
 export default app;

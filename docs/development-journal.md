@@ -226,3 +226,31 @@ They are also used for application configuration, such as PORT, so that the same
 - I initially hardcoded the port.
 - I misunderstood why PORT belongs in .env.
 - I learned the difference between configuration and hardcoding.
+
+# MongoDB Basics
+
+Database
+    ↓
+Collection
+    ↓
+Document
+    ↓
+Fields
+
+- Schema:
+Defines the structure of a document.
+
+- Model:
+Created from a schema and used to perform database operations.
+
+- Collection:
+A group of similar documents.
+
+- Document:
+A single record stored in a collection.
+
+CRUD:
+1. Create → create()
+2. Read → find(), findOne(), findById()
+3. Update → updateOne(), findByIdAndUpdate()
+4. Delete → deleteOne(), findByIdAndDelete()
