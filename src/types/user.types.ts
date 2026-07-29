@@ -6,3 +6,6 @@ export type UserType = {
     isActive: boolean,
     createdBy: string
 }
+export type UserEmail = {
+    email: string
+}
