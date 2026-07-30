@@ -1,6 +1,7 @@
 import { userRepository } from "../repositories/user.repository.js";
 import type { UserType } from "../types/user.types.js";
 import { isPasswordValid, isValidEmail } from "../utilities/validation.js";
+import { AppError } from "../errors/AppError.js";
 
 export const userService = {
     async createUser(userData: UserType): Promise<UserType> {
@@ -39,7 +40,7 @@ export const userService = {
         const isUserExist = await userRepository.findByEmail(userData.email)
         
         if (isUserExist) {
-            throw new Error("User Already Exists")
+            throw new AppError("User Already Exists", 409);
         }
 
         const userCreated = await userRepository.createUser(userData);
