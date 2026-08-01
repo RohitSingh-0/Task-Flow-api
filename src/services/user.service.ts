@@ -1,8 +1,9 @@
 import { userRepository } from "../repositories/user.repository.js";
-import type { UserType } from "../types/user.types.js";
+import type { Login, UserType } from "../types/user.types.js";
 import { isPasswordValid, isValidEmail } from "../utilities/validation.js";
 import { AppError } from "../errors/AppError.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const userService = {
     async createUser(userData: UserType): Promise<UserType> {
@@ -49,5 +50,34 @@ export const userService = {
         const userCreated = await userRepository.createUser(userData);
         return userCreated;
 
+    },
+
+    async login(loginDetail: Login) {
+        const { email, password } = loginDetail
+        const user = await userRepository.findByEmail(email)
+        if (!user) {
+            throw new AppError("Invalid email or password", 401);
+        }
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) {
+            throw new AppError("Invalid email or password", 401);
+        }
+
+        const token = jwt.sign(
+            { "userId": user._id },
+            process.env.JWT_SECRET as string,
+            {
+                expiresIn: "1h"
+            }
+        )
+        return token;
+    },
+
+    async getUserById(id: string) {
+        const userId = await userRepository.findById(id)
+        if (!userId) {
+            throw new AppError("Unauthorized", 401);
+        }
+        return userId;
     }
 }

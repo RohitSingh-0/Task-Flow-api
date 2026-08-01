@@ -9,3 +9,7 @@ export type UserType = {
 export type UserEmail = {
     email: string
 }
+export interface Login {
+    email: string,
+    password: string
+}

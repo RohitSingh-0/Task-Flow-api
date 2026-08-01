@@ -11,5 +11,9 @@ export const userRepository = {
     async createUser(userData: UserType) {
         const createdUser = await User.create(userData);
         return createdUser;
+    },
+    async findById(id: string) {
+        const user = await User.findById(id)
+        return user;
     }
 }
