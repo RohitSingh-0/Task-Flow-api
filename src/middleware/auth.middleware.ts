@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express"
 import { AppError } from "../errors/AppError.js";
-import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import type { AuthTokenPayload } from "../types/user.types.js";
 import { userService } from "../services/user.service.js";
 
@@ -37,16 +37,27 @@ export const authMiddleware = async (
 
         const user = await userService.getUserById(userId);
 
-        req.user = user;
+        req.user = {
+            _id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            isActive: user.isActive
+        };
 
         next();
     } catch (error) {
-        if (error instanceof TokenExpiredError) {
-            return next(new AppError("Token has expired", 401));
+
+        if (error instanceof jwt.TokenExpiredError) {
+            return next(
+                new AppError("Token has expired", 401)
+            );
         }
 
-        if (error instanceof JsonWebTokenError) {
-            return next(new AppError("Invalid token", 401));
+        if (error instanceof jwt.JsonWebTokenError) {
+            return next(
+                new AppError("Invalid token", 401)
+            );
         }
 
         return next(error);

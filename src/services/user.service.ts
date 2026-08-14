@@ -1,10 +1,11 @@
 import { userRepository } from "../repositories/user.repository.js";
-import type { Login, UserType } from "../types/user.types.js";
+import type { Login, UserType, AuthenticatedUser } from "../types/user.types.js";
 import { isPasswordValid, isValidEmail } from "../utilities/validation.js";
 import { AppError } from "../errors/AppError.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Role } from "../constants/role.js";
+import { resolvePtr } from "dns";
 
 export const userService = {
     async createUser(userData: UserType): Promise<UserType> {
@@ -105,5 +106,114 @@ export const userService = {
         }
         const deleteUser = await userRepository.deleteUser(targetUserId);
         return deleteUser;
+    },
+    async getUser(role: Role) {
+
+        if (role === Role.Admin) {
+            const getAllUser = await userRepository.findAllUser()
+            if (getAllUser.length === 0) {
+                throw new AppError("No user found", 404);
+            }
+            return getAllUser
+        }
+
+        if (role === Role.Manager) {
+            const getAllEmployees = await userRepository.findAllEmployee()
+            if (getAllEmployees.length === 0) {
+                throw new AppError("No employees found", 404);
+            }
+            return getAllEmployees
+        }
+    },
+
+
+
+    async updateUser(authenticatedUser: AuthenticatedUser, targetUserId: string, updateData: Partial<UserType>) {
+
+        const targetUser = await userRepository.findById(targetUserId);
+
+        if (!targetUser) {
+            throw new AppError("User not found", 404);
+        }
+
+        // ADMIN
+        if (authenticatedUser.role === Role.Admin) {
+
+            const allowedFields = ["name", "email", "role", "isActive"];
+
+            const updateKeys = Object.keys(updateData);
+            const invalidField = updateKeys.find((key) => !allowedFields.includes(key));
+
+            if (invalidField) {
+                throw new AppError(`${invalidField} cannot be updated`, 400);
+            }
+
+
+            if (updateData.email !== undefined) {
+
+                if (!isValidEmail(updateData.email)) {
+                    throw new AppError("Invalid Email Format", 400);
+                }
+
+                const existingUser = await userRepository.findByEmail(updateData.email);
+
+                if (
+                    existingUser &&
+                    existingUser._id.toString() !== targetUserId
+                ) {
+                    throw new AppError("Email already exists", 409);
+                }
+            }
+
+            const updatedUser = await userRepository.updateUser(targetUserId, updateData);
+            return updatedUser;
+        }
+
+        // MANAGER
+        if (authenticatedUser.role === Role.Manager) {
+
+            if (targetUser.role !== Role.Employee) {
+                throw new AppError("Manager can only update employees", 403);
+            }
+
+            const allowedFields = ["name", "email"];
+            const updateKeys = Object.keys(updateData);
+
+            const invalidField = updateKeys.find((key) => !allowedFields.includes(key));
+
+            if (invalidField) {
+                throw new AppError(`Manager cannot update ${invalidField}`, 403);
+            }
+
+            const updatedUser = await userRepository.updateUser(targetUserId, updateData);
+            return updatedUser;
+        }
+
+        // EMPLOYEE
+        if (authenticatedUser.role === Role.Employee) {
+
+            if (authenticatedUser._id !== targetUserId) {
+                throw new AppError("You can only update your own profile", 403);
+            }
+
+            const allowedFields = ["name", "email"];
+            const updateKeys = Object.keys(updateData);
+
+            const invalidField = updateKeys.find((key) => !allowedFields.includes(key));
+
+            if (invalidField) {
+                throw new AppError(`Employee cannot update ${invalidField}`, 403);
+            }
+
+            const updatedUser = await userRepository.updateUser(targetUserId, updateData);
+            return updatedUser;
+        }
+
+        throw new AppError("Invalid user role", 403);
     }
-}
+
+
+
+
+
+}   

@@ -35,14 +35,41 @@ export const userController = {
     async getUser(req: Request, res: Response) {
         const targetUserId = req.params.id;
 
-        if(!targetUserId || Array.isArray(targetUserId)) {
+        if (!targetUserId || Array.isArray(targetUserId)) {
             throw new AppError("Invalid user ID", 400);
         }
 
-        const findUser =  await userService.getUserById(targetUserId)
+        const findUser = await userService.getUserById(targetUserId)
         res.status(200).json({
-            message : "User find successfully",
+            message: "User find successfully",
             findUser
         })
+    },
+
+    async getAllUser(req: Request, res: Response) {
+        const role = req.user.role
+        
+        const findUser = await userService.getUser(role)
+        res.status(200).json({
+            message: "User find successfully",
+            findUser
+        })
+    },
+
+    async update(req: Request, res: Response) {
+        const targetUserId = req.params.id
+
+         if (!targetUserId || Array.isArray(targetUserId)) {
+            throw new AppError("Invalid user ID", 400);
+        }
+        
+        const authenticatedUser = req.user
+        const updatedata = req.body
+        const updateUser = await userService.updateUser(authenticatedUser, targetUserId, updatedata);
+        res.status(200).json({
+            message: "User Updated successfully",
+            updateUser
+        })
+
     }
 }

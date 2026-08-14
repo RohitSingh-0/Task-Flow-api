@@ -24,5 +24,19 @@ export const userRepository = {
     async deleteUser(targetUSerId: string) {
         const deletedUser = await User.findByIdAndDelete(targetUSerId)
         return deletedUser;
-    }
+    },
+    async findAllEmployee() {
+        const employee = await User.find({
+            role: Role.Employee
+        }).select("-password")
+        return employee;
+    },
+    async findAllUser() {
+        const allUser = await User.find().select("-password");
+        return allUser
+    },
+    async updateUser(targetUserId: string, updateData: Partial<UserType>) {
+    const updatedUser = await User.findByIdAndUpdate(targetUserId, updateData, {new: true, runValidators: true}).select("-password");
+    return updatedUser;
+}
 }
