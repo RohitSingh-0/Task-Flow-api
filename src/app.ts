@@ -9,7 +9,6 @@ app.use(express.json());
 
 // Routes
 app.use("/users", router);
-app.use("/users", router);
 app.use(errorHandler);
 
 export default app;

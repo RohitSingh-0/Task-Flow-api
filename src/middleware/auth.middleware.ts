@@ -1,10 +1,10 @@
 import type { Request, Response, NextFunction } from "express"
 import { AppError } from "../errors/AppError.js";
-import jwt, {JsonWebTokenError, TokenExpiredError} from "jsonwebtoken"
-import type { AuthTokenPayload } from "../types/auth.types.js";
+import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken"
+import type { AuthTokenPayload } from "../types/user.types.js";
 import { userService } from "../services/user.service.js";
 
-const authMiddleware = async (
+export const authMiddleware = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -52,6 +52,4 @@ const authMiddleware = async (
         return next(error);
     }
 };
-
-export default authMiddleware;
 

@@ -4,6 +4,7 @@ import { isPasswordValid, isValidEmail } from "../utilities/validation.js";
 import { AppError } from "../errors/AppError.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Role } from "../constants/role.js";
 
 export const userService = {
     async createUser(userData: UserType): Promise<UserType> {
@@ -76,8 +77,33 @@ export const userService = {
     async getUserById(id: string) {
         const userId = await userRepository.findById(id)
         if (!userId) {
-            throw new AppError("Unauthorized", 401);
+            throw new AppError("User not found", 404);
         }
         return userId;
+    },
+
+    async deleteUser(targetUserId: string, authenticateUserId: string) {
+        if (targetUserId === authenticateUserId) {
+            throw new AppError("You cannot delete your own account", 403);
+        }
+
+        const targetUser = await userRepository.findById(targetUserId);
+        if (!targetUser) {
+            throw new AppError("User not found", 404);
+        }
+
+        if (targetUser.role === Role.Admin) {
+
+            const adminCount = await userRepository.countByRole(Role.Admin);
+
+            if (adminCount === 1) {
+                throw new AppError(
+                    "Cannot delete the last admin",
+                    403
+                );
+            }
+        }
+        const deleteUser = await userRepository.deleteUser(targetUserId);
+        return deleteUser;
     }
 }
