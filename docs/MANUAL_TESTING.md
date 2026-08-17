@@ -72,7 +72,7 @@ Verify that:
 - Express server starts
 - No TypeScript/runtime errors are present
 
-Base URL : http://localhost:3000
+Base URL : http://localhost:5000
 
 Adjust the port if the application is configured differently.
 

@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     role: { type: String, enum: Object.values(Role), required: true },
     profileImage: String,
     isActive: { type: Boolean, required: true },
-    createdBy: { type: String, required: true }
+    createdBy: { type: String}
 });
 
 export const User = mongoose.model("User", userSchema)
