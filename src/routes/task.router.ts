@@ -11,5 +11,6 @@ router.post("/", authMiddleware, authorize(Role.Admin, Role.Manager), taskContro
 router.get("/", authMiddleware, authorize(Role.Admin, Role.Manager), taskController.getAllTasks);
 router.get("/my", authMiddleware, authorize(Role.Employee), taskController.getMyTasks);
 router.patch("/:id", authMiddleware, authorize(Role.Admin, Role.Manager, Role.Employee), taskController.updateTask)
+router.delete("/:id", authMiddleware, authorize(Role.Admin), taskController.deletedTask)
 
 export default router

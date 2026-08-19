@@ -126,5 +126,16 @@ export const taskService = {
         }
 
         throw new AppError("Invalid user role", 403);
+    },
+
+    async deletedTask(targetTaskId: string, authenticatedUser: AuthenticatedUser) {
+
+        const targetTask = await taskRepository.findById(targetTaskId);
+
+        if (!targetTask) {
+            throw new AppError("Task not found", 404);
+        }
+        const taskDeleted = await taskRepository.deleteTask(targetTaskId)
+        return taskDeleted
     }
 }

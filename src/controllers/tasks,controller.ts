@@ -51,5 +51,22 @@ export const taskController = {
             message: "Task updated successfully",
             updatedTask
         });
+    },
+
+    async deletedTask(req: Request, res: Response) {
+
+        const targetTaskId = req.params.id
+
+         if (!targetTaskId || Array.isArray(targetTaskId)) {
+            throw new AppError("Invalid task ID", 400);
+        }
+
+        const authenticatedUser = req.user
+        const taskDeleted = await taskService.deletedTask(targetTaskId, authenticatedUser);
+
+        res.status(200).json({
+            message: "Task deleted successfully",
+            taskDeleted
+        })
     }
 }

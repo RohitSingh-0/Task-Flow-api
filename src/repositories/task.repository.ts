@@ -27,10 +27,7 @@ export const taskRepository = {
         return task;
     },
 
-    async updateTask(
-        taskId: string,
-        updateData: UpdateTask
-    ) {
+    async updateTask(taskId: string, updateData: UpdateTask) {
         const updatedTask = await Task.findByIdAndUpdate(
             taskId,
             updateData,
@@ -41,5 +38,10 @@ export const taskRepository = {
         );
 
         return updatedTask;
+    },
+    
+    async deleteTask(targetTaskId: string) {
+        const deletedTask = await Task.findByIdAndDelete(targetTaskId)
+        return deletedTask
     }
 }
