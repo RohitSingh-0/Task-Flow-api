@@ -14,7 +14,7 @@ export type UserType = {
     password: string,
     role: Role,
     isActive: boolean,
-    createdBy: string
+    createdBy?: string | null,
 }
 export type UserEmail = {
     email: string
