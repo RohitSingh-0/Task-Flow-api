@@ -1,0 +1,147 @@
+#loginPage {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+#leftMainDiv {
+  justify-content: flex-end;
+  background-color: rgb(5 10 36 / 100%)
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginSection {
+  height: 100vh;
+  width: 50vw;
+}
+
+#leftMainDiv,
+#rightMainDiv {
+  display: flex;
+  align-items: center;
+}
+
+#rightMainDiv {
+    background-color: rgb(197 198 198 / 100%);
+}
+
+.loginCard {
+  height: 75vh;
+  width: 40vw;
+}
+
+#loginHere {
+  font-size: 38px;
+  font-weight: 700;
+  font-style: italic;
+  color: white;
+}
+
+#leftChildBox {
+  background: linear-gradient(225deg, #0E1B56, #080F23, #0E1B57);
+}
+#journey {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 10px;
+  color: rgb(174 178 204 / 100%)
+}
+
+.width100 {
+  width: 100%;
+}
+
+#signIn {
+  background-color: rgb(231  230 242 / 100%);
+  margin: 20px 20px 20px 20px;
+  display: grid;
+  grid-template-rows:  40px 40px 40px 250px;
+  justify-items: center;
+  gap: 10px;
+  border-radius: 10px;
+ padding: 20px;
+ height: auto;
+}
+
+.blueColor {
+  background-color: rgb(0 213 255 / 100%);
+}
+.logoT {
+  height: 50px;
+  width: 50px;
+  font-weight: 600;
+  font-size: 32px;
+  border-radius: 10px;
+}
+
+#welcomeBack {
+  font-size: 32px;
+  font-weight: 700;
+  color: rgb(5 10 36 / 100%);
+}
+
+#signInToTask {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+#email,
+#password {
+  width: 100%;
+  height: 2rem;
+  background-color: rgb(175 175 196 / 100%);
+  border-radius: 5px;
+  padding: 5px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+   border: 2px solid transparent;
+}
+
+#email:focus,
+#password:focus {
+    outline: none;
+    border-color: #00D5FF;
+    box-shadow: 0 0 10px rgba(0, 213, 255, 0.5);
+}
+
+#formField {
+  padding: 10px 20px 10px 20px;
+}
+#passwordRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 10px;
+}
+#passwordRow a {
+   justify-self: end;
+   color: rgb(5 10 36 / 100%);
+}
+#passwordRow label {
+    justify-self: start;
+}
+#buttonRow {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+#buttonRow button {
+    color: black;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 500;
+
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+#buttonRow button:hover {
+    box-shadow: 0 0 18px rgba(0, 213, 255, 0.7);
+    transform: translateY(-2px);
+}
