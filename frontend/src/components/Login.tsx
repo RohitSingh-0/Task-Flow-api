@@ -1,7 +1,7 @@
 import "./Login.css";
 import type { FormEvent } from "react";
 import { api } from "../API";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export function Login() {
     const [isPasswordVisible, passwordVisible] = useState(false);
@@ -17,9 +17,6 @@ export function Login() {
                 password,
             };
             const response = await api.post("/users/login", body);
-            const token = response.data.userLoggedIn;
-            localStorage.setItem("token", token);
-            console.log(response.data);
         }
     }
 
