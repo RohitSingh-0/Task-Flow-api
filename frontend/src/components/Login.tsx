@@ -17,6 +17,9 @@ export function Login() {
                 password,
             };
             const response = await api.post("/users/login", body);
+            const token = response.data.userLoggedIn.token;
+
+            localStorage.setItem("token", token);
         }
     }
 

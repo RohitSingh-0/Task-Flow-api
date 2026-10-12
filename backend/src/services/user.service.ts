@@ -72,7 +72,10 @@ export const userService = {
                 expiresIn: "1h"
             }
         )
-        return token;
+        return {
+            token,
+            userId: user.id
+        }
     },
 
     async getUserById(id: string) {
